@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 4.1)
-project(calisto)
+project(book_store)
 
 set(CMAKE_CXX_STANDARD 26)
 
