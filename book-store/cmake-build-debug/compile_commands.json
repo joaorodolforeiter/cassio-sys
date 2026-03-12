@@ -1,0 +1,32 @@
+[
+{
+  "directory": "C:/Users/lkreuch/Documents/cassio-sys/book-store/cmake-build-debug",
+  "command": "C:\\Users\\lkreuch\\AppData\\Local\\Programs\\CLION2~1.3\\bin\\mingw\\bin\\G__~1.EXE -g -std=gnu++23 -fdiagnostics-color=always -o CMakeFiles\\calisto.dir\\main.cpp.obj -c C:\\Users\\lkreuch\\Documents\\cassio-sys\\book-store\\main.cpp",
+  "file": "C:/Users/lkreuch/Documents/cassio-sys/book-store/main.cpp",
+  "output": "C:/Users/lkreuch/Documents/cassio-sys/book-store/cmake-build-debug/CMakeFiles/calisto.dir/main.cpp.obj"
+},
+{
+  "directory": "C:/Users/lkreuch/Documents/cassio-sys/book-store/cmake-build-debug",
+  "command": "C:\\Users\\lkreuch\\AppData\\Local\\Programs\\CLION2~1.3\\bin\\mingw\\bin\\G__~1.EXE -g -std=gnu++23 -fdiagnostics-color=always -o CMakeFiles\\calisto.dir\\Order.cpp.obj -c C:\\Users\\lkreuch\\Documents\\cassio-sys\\book-store\\Order.cpp",
+  "file": "C:/Users/lkreuch/Documents/cassio-sys/book-store/Order.cpp",
+  "output": "C:/Users/lkreuch/Documents/cassio-sys/book-store/cmake-build-debug/CMakeFiles/calisto.dir/Order.cpp.obj"
+},
+{
+  "directory": "C:/Users/lkreuch/Documents/cassio-sys/book-store/cmake-build-debug",
+  "command": "C:\\Users\\lkreuch\\AppData\\Local\\Programs\\CLION2~1.3\\bin\\mingw\\bin\\G__~1.EXE -g -std=gnu++23 -fdiagnostics-color=always -o CMakeFiles\\calisto.dir\\Weight.cpp.obj -c C:\\Users\\lkreuch\\Documents\\cassio-sys\\book-store\\Weight.cpp",
+  "file": "C:/Users/lkreuch/Documents/cassio-sys/book-store/Weight.cpp",
+  "output": "C:/Users/lkreuch/Documents/cassio-sys/book-store/cmake-build-debug/CMakeFiles/calisto.dir/Weight.cpp.obj"
+},
+{
+  "directory": "C:/Users/lkreuch/Documents/cassio-sys/book-store/cmake-build-debug",
+  "command": "C:\\Users\\lkreuch\\AppData\\Local\\Programs\\CLION2~1.3\\bin\\mingw\\bin\\G__~1.EXE -g -std=gnu++23 -fdiagnostics-color=always -o CMakeFiles\\calisto.dir\\OrderItem.cpp.obj -c C:\\Users\\lkreuch\\Documents\\cassio-sys\\book-store\\OrderItem.cpp",
+  "file": "C:/Users/lkreuch/Documents/cassio-sys/book-store/OrderItem.cpp",
+  "output": "C:/Users/lkreuch/Documents/cassio-sys/book-store/cmake-build-debug/CMakeFiles/calisto.dir/OrderItem.cpp.obj"
+},
+{
+  "directory": "C:/Users/lkreuch/Documents/cassio-sys/book-store/cmake-build-debug",
+  "command": "C:\\Users\\lkreuch\\AppData\\Local\\Programs\\CLION2~1.3\\bin\\mingw\\bin\\G__~1.EXE -g -std=gnu++23 -fdiagnostics-color=always -o CMakeFiles\\calisto.dir\\Product.cpp.obj -c C:\\Users\\lkreuch\\Documents\\cassio-sys\\book-store\\Product.cpp",
+  "file": "C:/Users/lkreuch/Documents/cassio-sys/book-store/Product.cpp",
+  "output": "C:/Users/lkreuch/Documents/cassio-sys/book-store/cmake-build-debug/CMakeFiles/calisto.dir/Product.cpp.obj"
+}
+]

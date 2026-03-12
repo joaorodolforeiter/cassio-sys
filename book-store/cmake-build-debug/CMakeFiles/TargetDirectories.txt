@@ -1,0 +1,3 @@
+C:/Users/lkreuch/Documents/cassio-sys/book-store/cmake-build-debug/CMakeFiles/calisto.dir
+C:/Users/lkreuch/Documents/cassio-sys/book-store/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/lkreuch/Documents/cassio-sys/book-store/cmake-build-debug/CMakeFiles/rebuild_cache.dir
