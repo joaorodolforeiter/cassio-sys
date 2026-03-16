@@ -15,7 +15,7 @@ class Product final {
     Weight weight;
 
 public:
-    Product(std::string name, double price, const Weight &weight);
+    explicit Product(std::string name, double price, const Weight &weight);
 
     [[nodiscard]] const std::string &getName() const;
     [[nodiscard]] double getPrice() const;

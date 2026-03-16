@@ -13,7 +13,7 @@ class OrderItem final {
     unsigned int quantity;
 
 public:
-    OrderItem(const Product &product, unsigned int quantity);
+    explicit OrderItem(const Product &product, unsigned int quantity);
 
     [[nodiscard]] Product getProduct() const;
     [[nodiscard]] unsigned int getQuantity() const;

@@ -37,7 +37,6 @@ class Order {
   - shippingMethod : std::unique_ptr<ShippingMethod>
   + Order(shippingMethod)
   + addItem(item: OrderItem)
-  + changeShippingMethod(shippingMethod: ShippingMethod)
   + totalWeight() : Weight
   + totalPrice() : double
   + deliveryCost() : double

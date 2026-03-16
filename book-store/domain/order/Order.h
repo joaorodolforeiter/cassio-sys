@@ -20,7 +20,6 @@ public:
     Order &operator=(Order &&) noexcept = default;
 
     void addItem(const OrderItem &item);
-    void changeShippingMethod(std::unique_ptr<ShippingMethod> shippingMethod);
 
     [[nodiscard]] Weight totalWeight() const;
     [[nodiscard]] double totalPrice() const;
