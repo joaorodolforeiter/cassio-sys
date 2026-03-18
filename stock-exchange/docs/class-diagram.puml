@@ -1,0 +1,160 @@
+@startuml StockExchange
+
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam classFontSize 13
+skinparam classBackgroundColor #FAFAFA
+skinparam classBorderColor #888888
+skinparam arrowColor #555555
+skinparam arrowThickness 1.2
+skinparam linetype ortho
+
+' ─── Interfaces ───────────────────────────────────────
+
+interface StockObserver {
+    + update(stock: Stock): void
+}
+
+interface StockSubject {
+    + registerObserver(o: StockObserver): void
+    + removeObserver(o: StockObserver): void
+    + notifyObservers(): void
+}
+
+' ─── Enumeration ──────────────────────────────────────
+
+enum OrderType {
+    BUY
+    SELL
+}
+
+' ─── Core domain classes ──────────────────────────────
+
+class Stock {
+    - symbol: String
+    - name: String
+    - currentPrice: double
+    - orders: List<Order>
+    - observers: List<StockObserver>
+    --
+    + registerObserver(o: StockObserver): void
+    + removeObserver(o: StockObserver): void
+    + notifyObservers(): void
+    + addOrder(order: Order): void
+    + matchOrders(): Trade
+    + getCurrentPrice(): double
+    + updatePrice(price: double): void
+}
+
+class Order {
+    - stock: Stock
+    - investorName: String
+    - quantity: uint
+    - type: OrderType
+    - value: double
+    --
+    + getStock(): Stock
+    + getInvestorName(): String
+    + getQuantity(): uint
+    + getType(): OrderType
+    + getValue(): double
+    + execute(): Trade
+}
+
+class Trade {
+    - buyOrder: Order
+    - sellOrder: Order
+    - executedQty: uint
+    - price: double
+    --
+    + getBuyOrder(): Order
+    + getSellOrder(): Order
+    + getExecutedQty(): uint
+    + totalValue(): double
+}
+
+class Investor {
+    - name: String
+    - portfolio: Portfolio
+    - subscriptions: List<Stock>
+    --
+    + placeOrder(stock: Stock, type: OrderType, quantity: uint): void
+    + subscribe(stock: Stock): void
+    + unsubscribe(stock: Stock): void
+    + update(stock: Stock): void
+}
+
+class Portfolio {
+    - holdings: List<Holding>
+    --
+    + addHolding(h: Holding): void
+    + getHolding(s: Stock): Holding
+    + totalValue(): double
+}
+
+class Holding {
+    - stock: Stock
+    - quantity: uint
+    --
+    + getStock(): Stock
+    + getQuantity(): uint
+    + addQuantity(qty: uint): void
+    + removeQuantity(qty: uint): void
+}
+
+class Exchange {
+    - stocks: List<Stock>
+    - investors: List<Investor>
+    --
+    + registerStock(s: Stock): void
+    + registerInvestor(i: Investor): void
+    + processOrders(s: Stock): Trade
+    + getStock(symbol: String): Stock
+    + getMarketData(s: Stock): MarketData
+}
+
+class MarketData {
+    - stock: Stock
+    - volume: uint
+    - high: double
+    - low: double
+    --
+    + getStock(): Stock
+    + getVolume(): uint
+    + getHigh(): double
+    + getLow(): double
+}
+
+' ─── Realization (implements) ─────────────────────────
+
+Investor    ..|>  StockObserver
+Stock       ..|>  StockSubject
+
+' ─── «use» dependency between interfaces ──────────────
+
+StockSubject ..>  StockObserver : «use»
+
+' ─── Composition ──────────────────────────────────────
+
+Stock       *--  "0..*"  Order       : owns >
+Investor    *--  "1"     Portfolio   : owns >
+Portfolio   *--  "0..*"  Holding     : owns >
+
+' ─── Aggregation ──────────────────────────────────────
+
+Exchange    o--  "1..*"  Stock       : manages >
+Exchange    o--  "1..*"  Investor    : manages >
+
+' ─── Association ──────────────────────────────────────
+
+Investor    -->  "*"     Stock       : subscribes >
+Holding     -->  "1"     Stock       : references >
+MarketData  -->  "1"     Stock       : references >
+
+' ─── Dependency ───────────────────────────────────────
+
+Order       ..>  OrderType           : «use»
+Order       ..>  Trade               : «creates»
+Trade       -->  "2"     Order       : references >
+
+@enduml
