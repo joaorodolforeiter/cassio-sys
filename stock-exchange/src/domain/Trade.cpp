@@ -1,5 +1,5 @@
-#include "Trade.h"
-#include "Order.h"
+#include "domain/Trade.h"
+#include "domain/Order.h"
 #include <stdexcept>
 
 Trade::Trade(std::shared_ptr<Order> buyOrder,
