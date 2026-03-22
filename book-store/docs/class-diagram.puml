@@ -1,0 +1,88 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Weight {
+  - grams : unsigned int
+  + Weight(grams)
+  + inGrams() : unsigned int
+  + inKilograms() : double
+  + plus(other: Weight) : Weight
+  + times(multiplier: unsigned int) : Weight
+  + isLessThanOrEqual(other: Weight) : bool
+  + isGreaterThan(other: Weight) : bool
+}
+
+class Product {
+  - name : std::string
+  - price : double
+  - weight : Weight
+  + Product(name, price, weight)
+  + getName() : const std::string&
+  + getPrice() : double
+  + getWeight() : Weight
+}
+
+class OrderItem {
+  - product : Product
+  - quantity : unsigned int
+  + OrderItem(product, quantity)
+  + getProduct() : Product
+  + getQuantity() : unsigned int
+  + totalWeight() : Weight
+  + totalPrice() : double
+}
+
+class Order {
+  - items : std::vector<OrderItem>
+  - shippingMethod : std::unique_ptr<ShippingMethod>
+  + Order(shippingMethod)
+  + addItem(item: OrderItem)
+  + totalWeight() : Weight
+  + totalPrice() : double
+  + deliveryCost() : double
+}
+
+abstract class ShippingMethod {
+  + calculateCost(totalWeight: Weight) : double
+}
+
+enum ShippingMethodType {
+  Pac
+  Sedex
+  StorePickup
+}
+
+class ShippingMethodFactory {
+  + create(type: ShippingMethodType) : std::unique_ptr<ShippingMethod>
+}
+
+package "shipping.pac" {
+  class PacShipping {
+    + calculateCost(totalWeight: Weight) : double
+  }
+}
+
+package "shipping.sedex" {
+  class SedexShipping {
+    + calculateCost(totalWeight: Weight) : double
+  }
+}
+
+package "shipping.store_pickup" {
+  class StorePickup {
+    + calculateCost(totalWeight: Weight) : double
+  }
+}
+
+Order *-- "0..*" OrderItem
+Order *-- ShippingMethod
+OrderItem *-- Product
+Product *-- Weight
+ShippingMethod <|-- PacShipping
+ShippingMethod <|-- SedexShipping
+ShippingMethod <|-- StorePickup
+ShippingMethodFactory ..> ShippingMethodType
+ShippingMethodFactory ..> ShippingMethod
+ShippingMethod ..> Weight
+@enduml
+
