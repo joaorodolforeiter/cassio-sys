@@ -21,14 +21,14 @@ interface StockSubject {
     + notifyObservers(): void
 }
 
-' ─── Enumeration ──────────────────────────────────────
+' ─── Enumeração ──────────────────────────────────────
 
 enum OrderType {
     BUY
     SELL
 }
 
-' ─── Core domain classes ──────────────────────────────
+' ─── Classes do domínio principal ──────────────────────────────
 
 class Stock {
     - symbol: String
@@ -125,33 +125,33 @@ class MarketData {
     + getLow(): double
 }
 
-' ─── Realization (implements) ─────────────────────────
+' ─── Realização (implementa) ─────────────────────────
 
 Investor    ..|>  StockObserver
 Stock       ..|>  StockSubject
 
-' ─── «use» dependency between interfaces ──────────────
+' ─── «usa» dependência entre interfaces ──────────────
 
 StockSubject ..>  StockObserver : «use»
 
-' ─── Composition ──────────────────────────────────────
+' ─── Composição ──────────────────────────────────────
 
 Stock       *--  "0..*"  Order       : owns >
 Investor    *--  "1"     Portfolio   : owns >
 Portfolio   *--  "0..*"  Holding     : owns >
 
-' ─── Aggregation ──────────────────────────────────────
+' ─── Agregação ──────────────────────────────────────
 
 Exchange    o--  "1..*"  Stock       : manages >
 Exchange    o--  "1..*"  Investor    : manages >
 
-' ─── Association ──────────────────────────────────────
+' ─── Associação ──────────────────────────────────────
 
 Investor    -->  "*"     Stock       : subscribes >
 Holding     -->  "1"     Stock       : references >
 MarketData  -->  "1"     Stock       : references >
 
-' ─── Dependency ───────────────────────────────────────
+' ─── Dependência ─────────────────────────────────────
 
 Order       ..>  OrderType           : «use»
 Order       ..>  Trade               : «creates»

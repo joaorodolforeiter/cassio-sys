@@ -11,7 +11,7 @@
 #include "domain/MarketData.h"
 
 /**
- * @brief Print a separator line for output formatting
+ * @brief Imprime uma linha separadora para formatação da saída
  */
 void printSeparator(const std::string& title = "") {
     std::cout << "\n" << std::string(70, '=');
@@ -22,7 +22,7 @@ void printSeparator(const std::string& title = "") {
 }
 
 /**
- * @brief Print portfolio holdings
+ * @brief Imprime as posições do portfolio
  */
 void printPortfolio(const std::string& investorName, std::shared_ptr<Portfolio> portfolio) {
     std::cout << "\nPortfolio for " << investorName << ":\n";
@@ -57,19 +57,16 @@ void printPortfolio(const std::string& investorName, std::shared_ptr<Portfolio> 
               << std::fixed << std::setprecision(2) << totalValue << "\n";
 }
 
-/**
- * @brief Main demonstration of the Stock Exchange system
- */
 int main() {
     try {
         printSeparator(" Stock Exchange System - Demonstration ");
 
-        // ============ 1. Create the Exchange ============
+        // ============ 1. Criar a Bolsa ============
         std::cout << "\n[1] Creating Stock Exchange...\n";
         auto exchange = std::make_shared<Exchange>();
         std::cout << "    ✓ Exchange created\n";
 
-        // ============ 2. Register Stocks ============
+        // ============ 2. Registrar Ações ============
         printSeparator(" Registering Stocks ");
 
         auto appleStock = std::make_shared<Stock>("APPL", "Apple Inc.", 150.00);
@@ -87,7 +84,7 @@ int main() {
                       << stock->getCurrentPrice() << ")\n";
         }
 
-        // ============ 3. Register Investors ============
+        // ============ 3. Registrar Investidores ============
         printSeparator(" Registering Investors ");
 
         auto investor1 = std::make_shared<Investor>("Alice Johnson");
@@ -103,7 +100,7 @@ int main() {
             std::cout << "  - " << investor->getName() << "\n";
         }
 
-        // ============ 4. Subscribe to Stocks ============
+        // ============ 4. Inscrever em Ações ============
         printSeparator(" Investors Subscribe to Stocks ");
 
         investor1->subscribe(appleStock);
@@ -112,7 +109,7 @@ int main() {
 
         std::cout << "✓ Subscriptions created\n";
 
-        // ============ 5. Place Orders - Apple Stock ============
+        // ============ 5. Colocar Ordens - Ação Apple ============
         printSeparator(" Placing Orders for Apple Stock ");
 
         std::cout << "\nAlice places a BUY order: 100 shares at $149.00\n";
@@ -123,7 +120,7 @@ int main() {
 
         std::cout << "\n✓ Total orders in Apple stock: " << appleStock->getOrders().size() << "\n";
 
-        // ============ 6. Process Orders (Match Buy/Sell) ============
+        // ============ 6. Processar Ordens (Match Buy/Sell) ============
         printSeparator(" Processing Orders for Apple Stock ");
 
         auto trade = exchange->processOrders(appleStock);
@@ -145,7 +142,7 @@ int main() {
             std::cout << "✗ No matching orders found\n";
         }
 
-        // ============ 7. Update Price ============
+        // ============ 7. Atualizar Preço ============
         printSeparator(" Updating Stock Prices ");
 
         std::cout << "\nUpdating Apple stock price to $155.00...\n";
@@ -153,14 +150,14 @@ int main() {
         std::cout << "✓ Price updated to $" << std::fixed << std::setprecision(2)
                   << appleStock->getCurrentPrice() << "\n";
 
-        // ============ 8. Check Portfolios ============
+        // ============ 8. Verificar Portfolios ============
         printSeparator(" Investor Portfolios ");
 
         printPortfolio(investor1->getName(), investor1->getPortfolio());
         printPortfolio(investor2->getName(), investor2->getPortfolio());
         printPortfolio(investor3->getName(), investor3->getPortfolio());
 
-        // ============ 9. Market Data ============
+        // ============ 9. Dados de Mercado ============
         printSeparator(" Market Data ");
 
         auto marketData = exchange->getMarketData(appleStock);
@@ -174,7 +171,7 @@ int main() {
                       << marketData.value().getLow() << "\n";
         }
 
-        // ============ 10. Error Handling Demonstration ============
+        // ============ 10. Demonstração de Tratamento de Erros ============
         printSeparator(" Error Handling Demonstration ");
 
         try {
