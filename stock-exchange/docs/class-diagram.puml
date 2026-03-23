@@ -41,9 +41,12 @@ class Stock {
     + removeObserver(o: StockObserver): void
     + notifyObservers(): void
     + addOrder(order: Order): void
-    + matchOrders(): Trade
+    + matchOrders(): std::optional<Trade>
     + getCurrentPrice(): double
     + updatePrice(price: double): void
+    + getSymbol(): String
+    + getName(): String
+    + getOrders(): List<Order>
 }
 
 class Order {
@@ -52,13 +55,18 @@ class Order {
     - quantity: uint
     - type: OrderType
     - value: double
+    - remainingQuantity: uint
     --
     + getStock(): Stock
     + getInvestorName(): String
     + getQuantity(): uint
     + getType(): OrderType
+    + getOrderType(): OrderType
     + getValue(): double
-    + execute(): Trade
+    + getPrice(): double
+    + getRemainingQuantity(): uint
+    + reduceQuantity(executedQty: uint): void
+    + updateRemainingQuantity(quantity: uint): void
 }
 
 class Trade {
@@ -78,18 +86,21 @@ class Investor {
     - portfolio: Portfolio
     - subscriptions: List<Stock>
     --
-    + placeOrder(stock: Stock, type: OrderType, quantity: uint): void
+    + placeOrder(stock: Stock, quantity: uint, type: OrderType, price: double): Order
     + subscribe(stock: Stock): void
     + unsubscribe(stock: Stock): void
     + update(stock: Stock): void
+    + getName(): String
+    + getPortfolio(): Portfolio
 }
 
 class Portfolio {
     - holdings: List<Holding>
     --
     + addHolding(h: Holding): void
-    + getHolding(s: Stock): Holding
+    + getHolding(s: Stock): std::optional<Holding>
     + totalValue(): double
+    + getHoldings(): List<Holding>
 }
 
 class Holding {
@@ -108,9 +119,11 @@ class Exchange {
     --
     + registerStock(s: Stock): void
     + registerInvestor(i: Investor): void
-    + processOrders(s: Stock): Trade
-    + getStock(symbol: String): Stock
-    + getMarketData(s: Stock): MarketData
+    + processOrders(s: Stock): std::optional<Trade>
+    + getStock(symbol: String): std::optional<Stock>
+    + getMarketData(s: Stock): std::optional<MarketData>
+    + getStocks(): List<Stock>
+    + getInvestors(): List<Investor>
 }
 
 class MarketData {
