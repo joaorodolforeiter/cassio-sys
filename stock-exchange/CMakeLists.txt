@@ -20,6 +20,15 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 # Enable testing
 enable_testing()
 
+# Include FetchContent for Catch2
+include(FetchContent)
+FetchContent_Declare(
+    Catch2
+    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+    GIT_TAG v3.8.1
+)
+FetchContent_MakeAvailable(Catch2)
+
 # ============== DOMAIN SOURCES ==============
 set(DOMAIN_SOURCES
     src/domain/Order.cpp
@@ -60,38 +69,24 @@ add_executable(stock_exchange
 target_include_directories(stock_exchange PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 # ============== TEST EXECUTABLE ==============
-# Test sources from test/ directory
-set(TEST_SOURCES
-    test/main.cpp
-    test/test_order.cpp
-    test/test_stock.cpp
-    test/test_matching.cpp
-    test/test_portfolio.cpp
-    test/test_exchange.cpp
-    test/test_observer.cpp
-    ${DOMAIN_SOURCES}
-    ${HEADERS}
+# Test sources from test/ directory using Catch2
+add_executable(stock_exchange_tests
+    test/OrderTests.cpp
+    test/OrderMatchingTests.cpp
+    test/PortfolioTests.cpp
+    test/ObserverTests.cpp
+    test/StockTests.cpp
+    test/ExchangeTests.cpp
+        ${DOMAIN_SOURCES}
+        ${HEADERS}
 )
 
-add_executable(tests ${TEST_SOURCES})
-target_include_directories(tests PRIVATE ${CMAKE_SOURCE_DIR}/include)
-target_include_directories(tests PRIVATE ${CMAKE_SOURCE_DIR}/test)
+target_include_directories(stock_exchange_tests PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(stock_exchange_tests PRIVATE Catch2::Catch2WithMain)
 
 # Add test as a CTest test
-add_test(NAME StockExchangeTests COMMAND tests)
+add_test(NAME StockExchangeTests COMMAND stock_exchange_tests)
 
-# ============== BUILD OPTIONS ==============
-# Option to enable/disable debug symbols
-option(ENABLE_DEBUG_SYMBOLS "Enable debug symbols" ON)
-if(ENABLE_DEBUG_SYMBOLS)
-    if(MSVC)
-        target_compile_options(stock_exchange PRIVATE /Zi)
-        target_compile_options(tests PRIVATE /Zi)
-    else()
-        target_compile_options(stock_exchange PRIVATE -g)
-        target_compile_options(tests PRIVATE -g)
-    endif()
-endif()
 
 # Print build info
 message(STATUS "========================================")

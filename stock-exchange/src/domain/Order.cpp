@@ -49,8 +49,16 @@ OrderType Order::getType() const {
     return m_type;
 }
 
+OrderType Order::getOrderType() const {
+    return getType();
+}
+
 double Order::getValue() const {
     return m_value;
+}
+
+double Order::getPrice() const {
+    return getValue();
 }
 
 unsigned int Order::getRemainingQuantity() const {
@@ -65,5 +73,9 @@ void Order::reduceQuantity(unsigned int executedQty) {
         throw std::invalid_argument(oss.str());
     }
     m_remainingQuantity -= executedQty;
+}
+
+void Order::updateRemainingQuantity(unsigned int quantity) {
+    m_remainingQuantity = quantity;
 }
 

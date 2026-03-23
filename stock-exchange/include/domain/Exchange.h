@@ -9,7 +9,7 @@
 class Stock;
 class Investor;
 class Trade;
-class MarketData;
+#include "MarketData.h"
 
 /**
  * @brief Represents the stock exchange itself.

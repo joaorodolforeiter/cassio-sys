@@ -36,11 +36,14 @@ public:
     [[nodiscard]] const std::string& getInvestorName() const;
     [[nodiscard]] unsigned int getQuantity() const;
     [[nodiscard]] OrderType getType() const;
+    [[nodiscard]] OrderType getOrderType() const;  // Alias for getType()
     [[nodiscard]] double getValue() const;
+    [[nodiscard]] double getPrice() const;  // Alias for getValue()
 
     // Quantity tracking
     [[nodiscard]] unsigned int getRemainingQuantity() const;
     void reduceQuantity(unsigned int executedQty);
+    void updateRemainingQuantity(unsigned int quantity);  // Set remaining quantity
 
 private:
     std::shared_ptr<Stock> m_stock;

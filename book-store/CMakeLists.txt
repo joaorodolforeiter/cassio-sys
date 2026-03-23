@@ -25,9 +25,6 @@ add_library(book_store_domain
 
 target_include_directories(book_store_domain PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-add_executable(book_store_app main.cpp)
-target_link_libraries(book_store_app PRIVATE book_store_domain)
-
 include(FetchContent)
 FetchContent_Declare(
         Catch2
