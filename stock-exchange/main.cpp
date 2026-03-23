@@ -9,69 +9,58 @@
 #include "domain/Portfolio.h"
 #include "domain/Holding.h"
 #include "domain/MarketData.h"
+#include "domain/OutputFormatter.h"
 
 /**
- * @brief Imprime uma linha separadora para formatação da saída
+ * @brief Classe responsável pela demonstração do sistema de bolsa de valores
+ *
+ * Encapsula toda a lógica de demonstração seguindo o princípio da responsabilidade única.
  */
-void printSeparator(const std::string& title = "") {
-    std::cout << "\n" << std::string(70, '=');
-    if (!title.empty()) {
-        std::cout << "\n" << title << "\n" << std::string(70, '=');
-    }
-    std::cout << "\n";
-}
+class StockExchangeDemonstration {
+private:
+    std::shared_ptr<Exchange> exchange;
+    std::shared_ptr<Stock> appleStock;
+    std::shared_ptr<Stock> microsoftStock;
+    std::shared_ptr<Stock> googleStock;
+    std::shared_ptr<Investor> investor1;
+    std::shared_ptr<Investor> investor2;
+    std::shared_ptr<Investor> investor3;
 
-/**
- * @brief Imprime as posições do portfolio
- */
-void printPortfolio(const std::string& investorName, std::shared_ptr<Portfolio> portfolio) {
-    std::cout << "\nPortfolio for " << investorName << ":\n";
-    const auto& holdings = portfolio->getHoldings();
+public:
+    /**
+     * @brief Executa toda a demonstração do sistema
+     */
+    void run() {
+        OutputFormatter::printSeparator(" Stock Exchange System - Demonstration ");
 
-    if (holdings.empty()) {
-        std::cout << "  (empty)\n";
-        return;
-    }
+        createExchange();
+        registerStocks();
+        registerInvestors();
+        subscribeToStocks();
+        placeOrders();
+        processOrders();
+        updatePrices();
+        displayPortfolios();
+        displayMarketData();
+        demonstrateErrorHandling();
 
-    std::cout << std::left << std::setw(15) << "Stock"
-              << std::setw(10) << "Quantity"
-              << std::setw(15) << "Current Price"
-              << std::setw(20) << "Position Value" << "\n";
-    std::cout << std::string(60, '-') << "\n";
-
-    double totalValue = 0.0;
-    for (const auto& holding : holdings) {
-        auto stock = holding->getStock();
-        double positionValue = static_cast<double>(holding->getQuantity()) * stock->getCurrentPrice();
-
-        std::cout << std::left << std::setw(15) << stock->getSymbol()
-                  << std::setw(10) << holding->getQuantity()
-                  << std::setw(15) << std::fixed << std::setprecision(2) << stock->getCurrentPrice()
-                  << std::setw(20) << positionValue << "\n";
-
-        totalValue += positionValue;
+        OutputFormatter::printSeparator(" Demonstration Complete ");
+        std::cout << "\n✓ All operations completed successfully!\n\n";
     }
 
-    std::cout << std::string(60, '-') << "\n"
-              << std::left << std::setw(40) << "Total Portfolio Value:"
-              << std::fixed << std::setprecision(2) << totalValue << "\n";
-}
-
-int main() {
-    try {
-        printSeparator(" Stock Exchange System - Demonstration ");
-
-        // ============ 1. Criar a Bolsa ============
+private:
+    void createExchange() {
         std::cout << "\n[1] Creating Stock Exchange...\n";
-        auto exchange = std::make_shared<Exchange>();
+        exchange = std::make_shared<Exchange>();
         std::cout << "    ✓ Exchange created\n";
+    }
 
-        // ============ 2. Registrar Ações ============
-        printSeparator(" Registering Stocks ");
+    void registerStocks() {
+        OutputFormatter::printSeparator(" Registering Stocks ");
 
-        auto appleStock = std::make_shared<Stock>("APPL", "Apple Inc.", 150.00);
-        auto microsoftStock = std::make_shared<Stock>("MSFT", "Microsoft Corporation", 300.00);
-        auto googleStock = std::make_shared<Stock>("GOOGL", "Alphabet Inc.", 2800.00);
+        appleStock = std::make_shared<Stock>("APPL", "Apple Inc.", 150.00);
+        microsoftStock = std::make_shared<Stock>("MSFT", "Microsoft Corporation", 300.00);
+        googleStock = std::make_shared<Stock>("GOOGL", "Alphabet Inc.", 2800.00);
 
         exchange->registerStock(appleStock);
         exchange->registerStock(microsoftStock);
@@ -83,13 +72,14 @@ int main() {
                       << " (Price: $" << std::fixed << std::setprecision(2)
                       << stock->getCurrentPrice() << ")\n";
         }
+    }
 
-        // ============ 3. Registrar Investidores ============
-        printSeparator(" Registering Investors ");
+    void registerInvestors() {
+        OutputFormatter::printSeparator(" Registering Investors ");
 
-        auto investor1 = std::make_shared<Investor>("Alice Johnson");
-        auto investor2 = std::make_shared<Investor>("Bob Smith");
-        auto investor3 = std::make_shared<Investor>("Charlie Davis");
+        investor1 = std::make_shared<Investor>("Alice Johnson");
+        investor2 = std::make_shared<Investor>("Bob Smith");
+        investor3 = std::make_shared<Investor>("Charlie Davis");
 
         exchange->registerInvestor(investor1);
         exchange->registerInvestor(investor2);
@@ -99,18 +89,20 @@ int main() {
         for (const auto& investor : exchange->getInvestors()) {
             std::cout << "  - " << investor->getName() << "\n";
         }
+    }
 
-        // ============ 4. Inscrever em Ações ============
-        printSeparator(" Investors Subscribe to Stocks ");
+    void subscribeToStocks() {
+        OutputFormatter::printSeparator(" Investors Subscribe to Stocks ");
 
         investor1->subscribe(appleStock);
         investor2->subscribe(appleStock);
         investor3->subscribe(microsoftStock);
 
         std::cout << "✓ Subscriptions created\n";
+    }
 
-        // ============ 5. Colocar Ordens - Ação Apple ============
-        printSeparator(" Placing Orders for Apple Stock ");
+    void placeOrders() {
+        OutputFormatter::printSeparator(" Placing Orders for Apple Stock ");
 
         std::cout << "\nAlice places a BUY order: 100 shares at $149.00\n";
         auto order1 = investor1->placeOrder(appleStock, 100, OrderType::BUY, 149.00);
@@ -119,9 +111,10 @@ int main() {
         auto order2 = investor2->placeOrder(appleStock, 50, OrderType::SELL, 150.00);
 
         std::cout << "\n✓ Total orders in Apple stock: " << appleStock->getOrders().size() << "\n";
+    }
 
-        // ============ 6. Processar Ordens (Match Buy/Sell) ============
-        printSeparator(" Processing Orders for Apple Stock ");
+    void processOrders() {
+        OutputFormatter::printSeparator(" Processing Orders for Apple Stock ");
 
         auto trade = exchange->processOrders(appleStock);
 
@@ -141,24 +134,27 @@ int main() {
         } else {
             std::cout << "✗ No matching orders found\n";
         }
+    }
 
-        // ============ 7. Atualizar Preço ============
-        printSeparator(" Updating Stock Prices ");
+    void updatePrices() {
+        OutputFormatter::printSeparator(" Updating Stock Prices ");
 
         std::cout << "\nUpdating Apple stock price to $155.00...\n";
         appleStock->updatePrice(155.00);
         std::cout << "✓ Price updated to $" << std::fixed << std::setprecision(2)
                   << appleStock->getCurrentPrice() << "\n";
+    }
 
-        // ============ 8. Verificar Portfolios ============
-        printSeparator(" Investor Portfolios ");
+    void displayPortfolios() {
+        OutputFormatter::printSeparator(" Investor Portfolios ");
 
-        printPortfolio(investor1->getName(), investor1->getPortfolio());
-        printPortfolio(investor2->getName(), investor2->getPortfolio());
-        printPortfolio(investor3->getName(), investor3->getPortfolio());
+        OutputFormatter::printPortfolio(investor1->getName(), investor1->getPortfolio());
+        OutputFormatter::printPortfolio(investor2->getName(), investor2->getPortfolio());
+        OutputFormatter::printPortfolio(investor3->getName(), investor3->getPortfolio());
+    }
 
-        // ============ 9. Dados de Mercado ============
-        printSeparator(" Market Data ");
+    void displayMarketData() {
+        OutputFormatter::printSeparator(" Market Data ");
 
         auto marketData = exchange->getMarketData(appleStock);
         if (marketData.has_value()) {
@@ -170,9 +166,10 @@ int main() {
             std::cout << "  - Low: $" << std::fixed << std::setprecision(2)
                       << marketData.value().getLow() << "\n";
         }
+    }
 
-        // ============ 10. Demonstração de Tratamento de Erros ============
-        printSeparator(" Error Handling Demonstration ");
+    void demonstrateErrorHandling() {
+        OutputFormatter::printSeparator(" Error Handling Demonstration ");
 
         try {
             std::cout << "\nAttempting to register duplicate stock (APPL)...\n";
@@ -194,10 +191,16 @@ int main() {
         } catch (const std::invalid_argument& e) {
             std::cout << "✓ Caught expected error: " << e.what() << "\n";
         }
+    }
+};
 
-        printSeparator(" Demonstration Complete ");
-        std::cout << "\n✓ All operations completed successfully!\n\n";
-
+/**
+ * @brief Ponto de entrada principal do programa
+ */
+int main() {
+    try {
+        StockExchangeDemonstration demo;
+        demo.run();
         return 0;
 
     } catch (const std::exception& e) {
@@ -205,4 +208,3 @@ int main() {
         return 1;
     }
 }
-
