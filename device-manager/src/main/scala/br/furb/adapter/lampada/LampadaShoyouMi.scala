@@ -10,4 +10,8 @@ class LampadaShoyouMi extends Lampada {
     override def desligar(): Unit = {
         lampada.desligar()
     }
+    
+    override def estaLigada(): Boolean = {
+        lampada.estaLigada()
+    }
 }

@@ -10,4 +10,8 @@ class LampadaPhelippes extends Lampada {
     override def desligar(): Unit = {
         lampada.setIntensidade(0)
     }
+    
+    override def estaLigada(): Boolean = {
+        lampada.getIntensidade > 0
+    }
 }

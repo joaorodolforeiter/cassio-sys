@@ -10,4 +10,8 @@ class PersianaSolarius extends Persiana {
     override def descer(): Unit = {
         persiana.descerPersiana()
     }
+
+    override def estaAberta(): Boolean = {
+        persiana.estaAberta()
+    }
 }

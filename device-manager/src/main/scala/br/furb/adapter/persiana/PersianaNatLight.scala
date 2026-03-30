@@ -12,4 +12,8 @@ class PersianaNatLight extends Persiana {
         persiana.descerPalheta()
         persiana.fecharPalheta()
     }
+    
+    override def estaAberta(): Boolean = {
+        persiana.estaPalhetaAberta()
+    }
 }
