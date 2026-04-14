@@ -1,0 +1,15 @@
+C:\Users\lucasw\RiderProjects\cassio-sys\ExperimentalAnalysis\src\ExperimentalAnalysis\bin\Debug\net9.0\ExperimentalAnalysis.exe
+C:\Users\lucasw\RiderProjects\cassio-sys\ExperimentalAnalysis\src\ExperimentalAnalysis\bin\Debug\net9.0\ExperimentalAnalysis.deps.json
+C:\Users\lucasw\RiderProjects\cassio-sys\ExperimentalAnalysis\src\ExperimentalAnalysis\bin\Debug\net9.0\ExperimentalAnalysis.runtimeconfig.json
+C:\Users\lucasw\RiderProjects\cassio-sys\ExperimentalAnalysis\src\ExperimentalAnalysis\bin\Debug\net9.0\ExperimentalAnalysis.dll
+C:\Users\lucasw\RiderProjects\cassio-sys\ExperimentalAnalysis\src\ExperimentalAnalysis\bin\Debug\net9.0\ExperimentalAnalysis.pdb
+C:\Users\lucasw\RiderProjects\cassio-sys\ExperimentalAnalysis\src\ExperimentalAnalysis\obj\Debug\net9.0\ExperimentalAnalysis.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lucasw\RiderProjects\cassio-sys\ExperimentalAnalysis\src\ExperimentalAnalysis\obj\Debug\net9.0\ExperimentalAnalysis.AssemblyInfoInputs.cache
+C:\Users\lucasw\RiderProjects\cassio-sys\ExperimentalAnalysis\src\ExperimentalAnalysis\obj\Debug\net9.0\ExperimentalAnalysis.AssemblyInfo.cs
+C:\Users\lucasw\RiderProjects\cassio-sys\ExperimentalAnalysis\src\ExperimentalAnalysis\obj\Debug\net9.0\ExperimentalAnalysis.csproj.CoreCompileInputs.cache
+C:\Users\lucasw\RiderProjects\cassio-sys\ExperimentalAnalysis\src\ExperimentalAnalysis\obj\Debug\net9.0\ExperimentalAnalysis.sourcelink.json
+C:\Users\lucasw\RiderProjects\cassio-sys\ExperimentalAnalysis\src\ExperimentalAnalysis\obj\Debug\net9.0\ExperimentalAnalysis.dll
+C:\Users\lucasw\RiderProjects\cassio-sys\ExperimentalAnalysis\src\ExperimentalAnalysis\obj\Debug\net9.0\refint\ExperimentalAnalysis.dll
+C:\Users\lucasw\RiderProjects\cassio-sys\ExperimentalAnalysis\src\ExperimentalAnalysis\obj\Debug\net9.0\ExperimentalAnalysis.pdb
+C:\Users\lucasw\RiderProjects\cassio-sys\ExperimentalAnalysis\src\ExperimentalAnalysis\obj\Debug\net9.0\ExperimentalAnalysis.genruntimeconfig.cache
+C:\Users\lucasw\RiderProjects\cassio-sys\ExperimentalAnalysis\src\ExperimentalAnalysis\obj\Debug\net9.0\ref\ExperimentalAnalysis.dll
