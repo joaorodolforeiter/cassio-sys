@@ -1,0 +1,91 @@
+@startuml diagrama_classes
+class GerenciadorDispositivos {
+    - lampadas: ListBuffer[Lampada]
+    - persianas: ListBuffer[Persiana]
+    - arCondicionados: ListBuffer[ArCondicionado]
+    + addLampada(lampada: Lampada): Unit
+    + addPersiana(persiana: Persiana): Unit
+    + addArCondicionado(arCondicionado: ArCondicionado): Unit
+    + ligarTodasLampadas(): Unit
+    + desligarTodasLampadas(): Unit
+    + subirTodasPersianas(): Unit
+    + descerTodasPersianas(): Unit
+    + ligarTodosArCondicionados(): Unit
+    + desligarTodosArCondicionados(): Unit
+    + aumentarTemperaturaTodosArCondicionados(): Unit
+    + abaixarTemperaturaTodosArCondicionados(): Unit
+    + imprimirTemperaturas(): Unit
+}
+
+interface Lampada {
+    + ligar(): Unit
+    + desligar(): Unit
+    + estaLigada(): Boolean
+}
+
+interface Persiana {
+    + subir(): Unit
+    + descer(): Unit
+    + estaAberta(): Boolean
+}
+
+interface ArCondicionado {
+    + ligar(): Unit
+    + desligar(): Unit
+    + aumentarTemperatura(): Unit
+    + abaixarTemperatura(): Unit
+    + temperatura(): Int
+}
+
+enum TipoLampada {
+    ShoyouMi
+    Phelippes
+}
+
+enum TipoPersiana {
+    NatLight
+    Solarius
+}
+
+enum TipoArCondicionado {
+    GellaKaza
+    VentoBaumn
+}
+
+class LampadaFactory {
+    + criarLampada(tipoLampada: TipoLampada): Lampada
+}
+
+class PersianaFactory {
+    + criarPersiana(tipoPersiana: TipoPersiana): Persiana
+}
+
+class ArCondicionandoFactory {
+    + criarArCondicionado(tipoArCondicionado: TipoArCondicionado): ArCondicionado
+}
+
+class LampadaShoyouMi implements Lampada
+
+class LampadaPhelippes implements Lampada
+
+class PersianaNatLight implements Persiana
+
+class PersianaSolarius implements Persiana
+
+class ArCondicionadoGellaKaza implements ArCondicionado
+
+class ArCondicionadoVentoBaumn implements ArCondicionado
+
+GerenciadorDispositivos "1" *-- "lampadas" Lampada
+GerenciadorDispositivos "1" *-- "persianas" Persiana
+GerenciadorDispositivos "1" *-- "arCondicionados" ArCondicionado
+
+LampadaFactory ..> Lampada : creates
+PersianaFactory ..> Persiana : creates
+ArCondicionandoFactory ..> ArCondicionado : creates
+
+LampadaFactory --> TipoLampada
+PersianaFactory --> TipoPersiana
+ArCondicionandoFactory --> TipoArCondicionado
+
+@enduml
