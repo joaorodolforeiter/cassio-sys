@@ -1,0 +1,173 @@
+@startuml StockExchange
+
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam classFontSize 13
+skinparam classBackgroundColor #FAFAFA
+skinparam classBorderColor #888888
+skinparam arrowColor #555555
+skinparam arrowThickness 1.2
+skinparam linetype ortho
+
+' ─── Interfaces ───────────────────────────────────────
+
+interface StockObserver {
+    + update(stock: Stock): void
+}
+
+interface StockSubject {
+    + registerObserver(o: StockObserver): void
+    + removeObserver(o: StockObserver): void
+    + notifyObservers(): void
+}
+
+' ─── Enumeração ──────────────────────────────────────
+
+enum OrderType {
+    BUY
+    SELL
+}
+
+' ─── Classes do domínio principal ──────────────────────────────
+
+class Stock {
+    - symbol: String
+    - name: String
+    - currentPrice: double
+    - orders: List<Order>
+    - observers: List<StockObserver>
+    --
+    + registerObserver(o: StockObserver): void
+    + removeObserver(o: StockObserver): void
+    + notifyObservers(): void
+    + addOrder(order: Order): void
+    + matchOrders(): std::optional<Trade>
+    + getCurrentPrice(): double
+    + updatePrice(price: double): void
+    + getSymbol(): String
+    + getName(): String
+    + getOrders(): List<Order>
+}
+
+class Order {
+    - stock: Stock
+    - investorName: String
+    - quantity: uint
+    - type: OrderType
+    - value: double
+    - remainingQuantity: uint
+    --
+    + getStock(): Stock
+    + getInvestorName(): String
+    + getQuantity(): uint
+    + getType(): OrderType
+    + getOrderType(): OrderType
+    + getValue(): double
+    + getPrice(): double
+    + getRemainingQuantity(): uint
+    + reduceQuantity(executedQty: uint): void
+    + updateRemainingQuantity(quantity: uint): void
+}
+
+class Trade {
+    - buyOrder: Order
+    - sellOrder: Order
+    - executedQty: uint
+    - price: double
+    --
+    + getBuyOrder(): Order
+    + getSellOrder(): Order
+    + getExecutedQty(): uint
+    + totalValue(): double
+}
+
+class Investor {
+    - name: String
+    - portfolio: Portfolio
+    - subscriptions: List<Stock>
+    --
+    + placeOrder(stock: Stock, quantity: uint, type: OrderType, price: double): Order
+    + subscribe(stock: Stock): void
+    + unsubscribe(stock: Stock): void
+    + update(stock: Stock): void
+    + getName(): String
+    + getPortfolio(): Portfolio
+}
+
+class Portfolio {
+    - holdings: List<Holding>
+    --
+    + addHolding(h: Holding): void
+    + getHolding(s: Stock): std::optional<Holding>
+    + totalValue(): double
+    + getHoldings(): List<Holding>
+}
+
+class Holding {
+    - stock: Stock
+    - quantity: uint
+    --
+    + getStock(): Stock
+    + getQuantity(): uint
+    + addQuantity(qty: uint): void
+    + removeQuantity(qty: uint): void
+}
+
+class Exchange {
+    - stocks: List<Stock>
+    - investors: List<Investor>
+    --
+    + registerStock(s: Stock): void
+    + registerInvestor(i: Investor): void
+    + processOrders(s: Stock): std::optional<Trade>
+    + getStock(symbol: String): std::optional<Stock>
+    + getMarketData(s: Stock): std::optional<MarketData>
+    + getStocks(): List<Stock>
+    + getInvestors(): List<Investor>
+}
+
+class MarketData {
+    - stock: Stock
+    - volume: uint
+    - high: double
+    - low: double
+    --
+    + getStock(): Stock
+    + getVolume(): uint
+    + getHigh(): double
+    + getLow(): double
+}
+
+' ─── Realização (implementa) ─────────────────────────
+
+Investor    ..|>  StockObserver
+Stock       ..|>  StockSubject
+
+' ─── «usa» dependência entre interfaces ──────────────
+
+StockSubject ..>  StockObserver : «use»
+
+' ─── Composição ──────────────────────────────────────
+
+Stock       *--  "0..*"  Order       : owns >
+Investor    *--  "1"     Portfolio   : owns >
+Portfolio   *--  "0..*"  Holding     : owns >
+
+' ─── Agregação ──────────────────────────────────────
+
+Exchange    o--  "1..*"  Stock       : manages >
+Exchange    o--  "1..*"  Investor    : manages >
+
+' ─── Associação ──────────────────────────────────────
+
+Investor    -->  "*"     Stock       : subscribes >
+Holding     -->  "1"     Stock       : references >
+MarketData  -->  "1"     Stock       : references >
+
+' ─── Dependência ─────────────────────────────────────
+
+Order       ..>  OrderType           : «use»
+Order       ..>  Trade               : «creates»
+Trade       -->  "2"     Order       : references >
+
+@enduml
